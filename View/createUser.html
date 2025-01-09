@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+    <link rel="stylesheet" href="../Style/createUser.css" />
+    <!-- Link to your CSS file -->
+  </head>
+  <body>
+    <div class="user-creation-container">
+      <h2>Create User</h2>
+      <form id="userCreationForm">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="input-group">
+          <label>Roles</label>
+          <div class="roles-list">
+            <select id="roleSelect">
+              <option value="">Select a role</option>
+              <option value="admin">Admin</option>
+              <option value="editor">Editor</option>
+              <option value="viewer">Viewer</option>
+            </select>
+            <button type="button" id="addRoleBtn">Add Role</button>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Selected Roles</label>
+          <table id="rolesTable">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Selected roles will appear here -->
+            </tbody>
+          </table>
+        </div>
+        <button type="submit">Create User</button>
+      </form>
+    </div>
+
+    <script src="../ViewModel/createUser.js"></script>
+    <!-- Link to your JavaScript file -->
+  </body>
+</html>

@@ -16,7 +16,11 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+    max-height: 530px;
+    min-height: 530px;
     text-align: center;
+    overflow: hidden;
+    overflow-y: auto;
   }
   
   h2 {
@@ -52,7 +56,7 @@ body {
     align-items: center;
   }
   
-  #addRoleBtn {
+  #createGroupBtn {
     padding: 10px 15px;
     background-color: #28a745;
     color: #fff;
@@ -61,7 +65,7 @@ body {
     cursor: pointer;
   }
   
-  #addRoleBtn:hover {
+  #createGroupBtn:hover {
     background-color: #218838;
   }
   
@@ -69,6 +73,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    color: black;
   }
   
   table th,
@@ -76,6 +81,7 @@ body {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
+    color: black;
   }
   
   table th {

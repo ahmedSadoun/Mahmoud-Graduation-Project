@@ -4,16 +4,69 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create User</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../Style/header.css" />
     <link rel="stylesheet" href="../Style/createUser.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="../router.js"></script>
+    <script src="../Data/services.js"></script>
+
     <!-- Link to your CSS file -->
   </head>
   <body>
+    <header>
+      <div class="header-container">
+        <div class="burger-menu" id="burgerMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+          <h2></h2>
+        </div>
+        <div class="user-info" id="userInfo">
+          <!-- Login button or user details will be dynamically inserted here -->
+        </div>
+      </div>
+      <nav class="sidebar" id="sidebar">
+        <ul>
+          <li><a href="./homePage.html" class="nav-link">Home</a></li>
+          <li><a href="./userList.html" class="nav-link">Display Users</a></li>
+          <li><a href="./createUser.html" class="nav-link">Create User</a></li>
+          <li>
+            <a href="./createGroup.html" class="nav-link">Create Group</a>
+          </li>
+          <li>
+            <a href="./groupList.html" class="nav-link">Display Groups</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
     <div class="user-creation-container">
       <h2>Create User</h2>
       <form id="userCreationForm">
         <div class="input-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" required />
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" required />
+        </div>
+        <div class="input-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" required />
+        </div>
+        <div class="input-group">
+          <label for="userName">User Name</label>
+          <input type="text" id="userName" name="userName" required />
         </div>
         <div class="input-group">
           <label for="email">Email</label>
@@ -24,15 +77,15 @@
           <input type="password" id="password" name="password" required />
         </div>
         <div class="input-group">
-          <label>Roles</label>
+          <label>Groups</label>
           <div class="roles-list">
             <select id="roleSelect">
-              <option value="">Select a role</option>
+              <!-- <option value="">Select a Group</option>
               <option value="admin">Admin</option>
               <option value="editor">Editor</option>
-              <option value="viewer">Viewer</option>
+              <option value="viewer">Viewer</option> -->
             </select>
-            <button type="button" id="addRoleBtn">Add Role</button>
+            <button type="button" id="createGroupBtn">Add Role</button>
           </div>
         </div>
         <div class="input-group">

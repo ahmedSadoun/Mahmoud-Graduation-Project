@@ -190,7 +190,7 @@ body {
     align-items: center;
   }
   
-  #addRoleBtn {
+  #createGroupBtn {
     padding: 10px 15px;
     background-color: #28a745;
     color: #fff;
@@ -199,7 +199,7 @@ body {
     cursor: pointer;
   }
   
-  #addRoleBtn:hover {
+  #createGroupBtn:hover {
     background-color: #218838;
   }
   

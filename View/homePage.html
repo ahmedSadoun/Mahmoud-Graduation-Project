@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="../Style/homePage.css" />
+    <link rel="stylesheet" href="../Style/header.css" />
+    <script src="../router.js"></script>
+
+    <!-- Link to your CSS file -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="burger-menu" id="burgerMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+          <h2>Dashboard</h2>
+        </div>
+        <div class="user-info" id="userInfo">
+          <!-- Login button or user details will be dynamically inserted here -->
+        </div>
+      </div>
+      <nav class="sidebar" id="sidebar">
+        <ul>
+          <li><a href="./homePage.html" class="nav-link">Home</a></li>
+          <li><a href="./userList.html" class="nav-link">Display Users</a></li>
+          <li><a href="./createUser.html" class="nav-link">Create User</a></li>
+          <li>
+            <a href="./createGroup.html" class="nav-link">Create Group</a>
+          </li>
+          <li>
+            <a href="./groupList.html" class="nav-link">Display Groups</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="home-container">
+      <div class="content">
+        <h1 class="fade-in">Welcome to the Admin Dashboard</h1>
+        <p class="fade-in">Manage your users, groups, and roles with ease.</p>
+        <!-- <div class="features">
+          <div
+            class="feature-card slide-in-left"
+            onclick="window.location.href='user-list.html'"
+          >
+            <i class="fas fa-users"></i>
+            <h3>User Management</h3>
+            <p>Easily manage users, assign roles, and track activity.</p>
+          </div>
+          <div
+            class="feature-card slide-in-right"
+            onclick="window.location.href='group-management.html'"
+          >
+            <i class="fas fa-layer-group"></i>
+            <h3>Group Management</h3>
+            <p>Organize users into groups and assign permissions.</p>
+          </div>
+          <div
+            class="feature-card slide-in-left"
+            onclick="window.location.href='role-management.html'"
+          >
+            <i class="fas fa-key"></i>
+            <h3>Role Management</h3>
+            <p>
+              Define roles and control access to different parts of the system.
+            </p>
+          </div>
+        </div> -->
+      </div>
+      <div class="animation-container">
+        <div class="circle"></div>
+        <div class="square"></div>
+        <div class="triangle"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 Admin Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script src="../ViewModel/homePage.js"></script>
+    <!-- Link to your JavaScript file -->
+  </body>
+</html>

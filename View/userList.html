@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../Style/header.css" />
+    <link rel="stylesheet" href="../Style/userList.css" />
+    <!-- Link to your CSS file -->
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="burger-menu" id="burgerMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+          <h2></h2>
+        </div>
+        <div class="user-info" id="userInfo">
+          <!-- Login button or user details will be dynamically inserted here -->
+        </div>
+      </div>
+      <nav class="sidebar" id="sidebar">
+        <ul>
+          <li><a href="./homePage.html" class="nav-link">Home</a></li>
+          <li><a href="./userList.html" class="nav-link">Display Users</a></li>
+          <li><a href="./createUser.html" class="nav-link">Create User</a></li>
+          <li>
+            <a href="./createGroup.html" class="nav-link">Create Group</a>
+          </li>
+          <li>
+            <a href="./groupList.html" class="nav-link">Display Groups</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="user-list-container">
+      <h2>User List</h2>
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by username..."
+        />
+      </div>
+      <table id="usersTable">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- User data will be dynamically inserted here -->
+        </tbody>
+      </table>
+      <div class="actions-container">
+        <button id="deleteBtn" disabled>Delete User</button>
+        <button id="updateBtn" disabled>Update User</button>
+      </div>
+    </div>
+
+    <script src="../ViewModel/userList.js"></script>
+    <!-- Link to your JavaScript file -->
+  </body>
+</html>

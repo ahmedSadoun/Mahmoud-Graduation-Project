@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Group List</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../Style/header.css" />
+    <link rel="stylesheet" href="../Style/groupList.css" />
+    <!-- Link to your CSS file -->
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="burger-menu" id="burgerMenu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+          <h2></h2>
+        </div>
+        <div class="user-info" id="userInfo">
+          <!-- Login button or user details will be dynamically inserted here -->
+        </div>
+      </div>
+      <nav class="sidebar" id="sidebar">
+        <ul>
+          <li><a href="./homePage.html" class="nav-link">Home</a></li>
+          <li><a href="./userList.html" class="nav-link">Display Users</a></li>
+          <li><a href="./createUser.html" class="nav-link">Create User</a></li>
+          <li>
+            <a href="./createGroup.html" class="nav-link">Create Group</a>
+          </li>
+          <li>
+            <a href="./groupList.html" class="nav-link">Display Groups</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="group-container">
+      <h2>Group List</h2>
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by group name or description..."
+        />
+      </div>
+      <table id="groupTable">
+        <thead>
+          <tr>
+            <th>Group ID</th>
+            <th>Group Name</th>
+            <th>Group Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Group data will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="../ViewModel/groupList.js"></script>
+    <!-- Link to your JavaScript file -->
+  </body>
+</html>

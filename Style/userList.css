@@ -1,0 +1,97 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .user-list-container {
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .search-container {
+    margin-bottom: 20px;
+  }
+  
+  #searchInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #f8f9fa;
+  }
+  
+  tr.selected {
+    background-color: #2575fc; /* Highlight color for selected row */
+  }
+  tr {
+    color: #0b0b0b; /* Highlight color for selected row */
+  }
+  
+  .actions-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  #deleteBtn,
+  #updateBtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #deleteBtn {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  #deleteBtn:disabled {
+    background-color: #f8d7da;
+    cursor: not-allowed;
+  }
+  
+  #updateBtn {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  #updateBtn:disabled {
+    background-color: #cce5ff;
+    cursor: not-allowed;
+  }

@@ -1,14 +1,51 @@
 import axios from "axios";
 const dbURL = "https://windinfosys.com";
 
-const example = async (commentContent) => {
+async function logIn(username, password) {
   try {
-    let data = JSON.stringify(commentContent);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/saadoun_task/User_Management/user_full_details`,
+      headers: {
+        username: username,
+        password: password,
+      },
+    };
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getGroups(groupName) {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/saadoun_task/User_Management/groups?group_name=${
+        groupName || ""
+      }`,
+      headers: {},
+    };
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function createUser(userObj) {
+  try {
+    let data = JSON.stringify(userObj);
 
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "https://windinfosys.com/ords/saadoun_task/ifixit/comments",
+      url: `${dbURL}/ords/saadoun_task/User_Management/users`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -16,28 +53,38 @@ const example = async (commentContent) => {
     };
 
     const response = await axios.request(config);
-    console.log(response);
+    // console.log(JSON.stringify(response.data));
     return response.data;
   } catch (error) {
-    if (error.response) {
-      // Request made and server responded
-      // console.error("Error response data:", error.response.data);
-      // console.error("Error status:", error.response.status);
-      // console.error("Error headers:", error.response.headers);
-      return error.response;
-    } else if (error.request) {
-      // Request was made but no response
-      console.error("No response received:", error.request);
-      return error.request;
-    } else {
-      // Something else caused the error
-      console.error("Error:", error.message);
-      return error.message;
-    }
+    console.log(error);
   }
-};
+}
+
+async function createUserGroups(groupsList, userID) {
+  try {
+    let data = JSON.stringify(groupsList);
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/saadoun_task/User_Management/users_groups_membership?user_id=${
+        userID || ""
+      }`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function print(input) {
   console.log("sssssss, ", input);
 }
 
-export { print, example };
+export { print, logIn, getGroups, createUser, createUserGroups };

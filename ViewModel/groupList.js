@@ -1,4 +1,9 @@
 // script.js
+window.addEventListener("load", async () => {
+  if (!findPageByName("DISPLAY_GROUP")) {
+    goToPage("homePage.html");
+  }
+});
 // Sample group data
 const data = {
   items: [

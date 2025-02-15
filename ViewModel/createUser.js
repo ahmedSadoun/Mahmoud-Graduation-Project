@@ -1,4 +1,7 @@
 window.addEventListener("load", async () => {
+  if (!findPageByName("CREATE_USERS")) {
+    goToPage("homePage.html");
+  }
   let res = await getGroups();
   console.table(res.items);
   populateRoleSelect(res.items);
@@ -34,7 +37,6 @@ document
     const selectedOption =
       roleSelect.options[roleSelect.selectedIndex].textContent;
     const selectedRole = roleSelect.value;
-    groupList.push({ group_id: selectedRole, group_name: selectedOption });
     // console.log("label ", selectedOption.textContent);
 
     if (selectedRole === "") {
@@ -54,6 +56,7 @@ document
       alert("This role has already been added.");
       return;
     }
+    groupList.push({ group_id: selectedRole, group_name: selectedOption });
 
     // Add the role to the table
     const newRow = rolesTable.insertRow();
@@ -136,7 +139,7 @@ document
       document.getElementById("userCreationForm").reset();
       rolesTable.innerHTML = ""; // Clear the roles table
       goToPage("createUser.html");
-      console.log("User Created:", user);
+      // console.log("User Created:", user);
 
       // You can send the user data to a backend server here
       // Example: fetch('/api/users', { method: 'POST', body: JSON.stringify(user) });

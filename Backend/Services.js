@@ -37,6 +37,21 @@ async function getGroups(groupName) {
     console.log(error);
   }
 }
+async function getPages() {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/saadoun_task/User_Management/pages`,
+      headers: {},
+    };
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function createUser(userObj) {
   try {
@@ -46,6 +61,27 @@ async function createUser(userObj) {
       method: "post",
       maxBodyLength: Infinity,
       url: `${dbURL}/ords/saadoun_task/User_Management/users`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function createGroup(groupOBJ) {
+  try {
+    let data = JSON.stringify(groupOBJ);
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/saadoun_task/User_Management/groups`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -82,9 +118,40 @@ async function createUserGroups(groupsList, userID) {
     console.log(error);
   }
 }
+async function createGroupPages(PagesList, groupID) {
+  try {
+    let data = JSON.stringify(PagesList);
 
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/saadoun_task/User_Management/groups_pages_membership?group_id=${
+        groupID || ""
+      }`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+// getPages();
 function print(input) {
   console.log("sssssss, ", input);
 }
 
-export { print, logIn, getGroups, createUser, createUserGroups };
+export {
+  print,
+  logIn,
+  getGroups,
+  createUser,
+  createUserGroups,
+  getPages,
+  createGroup,
+  createGroupPages,
+};

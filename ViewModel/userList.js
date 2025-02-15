@@ -1,4 +1,9 @@
 // script.js
+window.addEventListener("load", async () => {
+  if (!findPageByName("DISPLAY_USERS")) {
+    goToPage("homePage.html");
+  }
+});
 // Sample user data
 let users = [
   {

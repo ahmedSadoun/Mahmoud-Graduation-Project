@@ -1,4 +1,11 @@
 // script.js
+window.addEventListener("load", async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user) {
+    goToPage("homePage.html");
+  }
+});
+
 document
   .getElementById("loginForm")
   .addEventListener("submit", async function (event) {

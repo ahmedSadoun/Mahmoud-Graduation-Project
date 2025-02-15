@@ -26,6 +26,17 @@ async function getGroups(groupName) {
   //   console.log(res);
   return res;
 }
+async function getPages() {
+  var settings = {
+    url: `${baseURL}/pages`,
+    method: "GET",
+    timeout: 0,
+  };
+
+  let res = await $.ajax(settings);
+  //   console.log(res);
+  return res;
+}
 async function createUser(userOBJ) {
   var settings = {
     url: `${baseURL}/createUser`,
@@ -41,6 +52,21 @@ async function createUser(userOBJ) {
   //   console.log(res);
   return res;
 }
+async function createGroup(GroupOBJ) {
+  var settings = {
+    url: `${baseURL}/createGroup`,
+    method: "POST",
+    timeout: 0,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(GroupOBJ),
+  };
+
+  let res = await $.ajax(settings);
+  //   console.log(res);
+  return res;
+}
 async function createUserGroups(groupsList, userID) {
   var settings = {
     url: `${baseURL}/createUserGroups?user_id=${userID || ""}`,
@@ -50,6 +76,21 @@ async function createUserGroups(groupsList, userID) {
       "Content-Type": "application/json",
     },
     data: JSON.stringify(groupsList),
+  };
+
+  let res = await $.ajax(settings);
+  //   console.log(res);
+  return res;
+}
+async function createGroupPages(pagesList, groupID) {
+  var settings = {
+    url: `${baseURL}/createGroupPages?group_id=${groupID || ""}`,
+    method: "POST",
+    timeout: 0,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(pagesList),
   };
 
   let res = await $.ajax(settings);

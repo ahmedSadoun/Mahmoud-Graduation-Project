@@ -16,7 +16,11 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+    max-height: 530px;
+    min-height: 530px;
     text-align: center;
+    overflow: hidden;
+    overflow-y: auto;
   }
   
   h2 {
@@ -74,10 +78,12 @@ body {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
+    color: black;
   }
   
   table th {
     background-color: #f8f9fa;
+    color: black;
   }
   
   .removePageBtn {
@@ -102,6 +108,7 @@ body {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+  
   }
   
   button[type="submit"]:hover {

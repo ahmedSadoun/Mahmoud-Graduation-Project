@@ -6,6 +6,9 @@ import {
   getGroups,
   createUser,
   createUserGroups,
+  getPages,
+  createGroup,
+  createGroupPages,
 } from "./Services.js";
 const app = express();
 app.use(express.json());
@@ -34,11 +37,32 @@ app.get("/groups", async (req, res) => {
     res.status(500).send("Internal Server Error!");
   }
 });
+app.get("/pages", async (req, res) => {
+  try {
+    // console.log(req.query);
+    const result = await getPages();
+    // console.log(result);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send("Internal Server Error!");
+  }
+});
 app.post("/createUser", async (req, res) => {
   try {
     const reqBody = req.body;
     // console.log(req.query);
     const result = await createUser(reqBody);
+    // console.log(result);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send("Internal Server Error!");
+  }
+});
+app.post("/createGroup", async (req, res) => {
+  try {
+    const reqBody = req.body;
+    // console.log(req.query);
+    const result = await createGroup(reqBody);
     // console.log(result);
     res.send(result);
   } catch (error) {
@@ -51,6 +75,18 @@ app.post("/createUserGroups", async (req, res) => {
     const { user_id } = req.query;
     // console.log(req.query);
     const result = await createUserGroups(reqBody, user_id);
+    // console.log(result);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send("Internal Server Error!");
+  }
+});
+app.post("/createGroupPages", async (req, res) => {
+  try {
+    const reqBody = req.body;
+    const { group_id } = req.query;
+    // console.log(req.query);
+    const result = await createGroupPages(reqBody, group_id);
     // console.log(result);
     res.send(result);
   } catch (error) {

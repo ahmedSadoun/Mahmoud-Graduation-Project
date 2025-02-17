@@ -1,0 +1,288 @@
+// http://localhost:8080/ords/saadoun_task/User_Management/groups
+// GET
+select * from groups where group_name like nvl('%'||:group_name||'%', group_name) and is_deleted = 'F' order by group_id
+
+Param: 
+group_name	group_name	IN	URI	STRING	
+
+// POST
+BEGIN
+    INSERT INTO groups (
+        group_name,
+        group_description
+    ) VALUES (
+        :group_name,
+        :group_description
+    ) returning GROUP_ID into :group_id;
+
+    :status := 200;
+    :status_message := 'Success';
+EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+        :status_message := sqlerrm;
+END;
+
+Param:
+group_id	group_id	OUT	RESPONSE	STRING	
+status	status	OUT	RESPONSE	STRING	
+status_message	status_message	OUT	RESPONSE	STRING	
+// PUT
+BEGIN
+    UPDATE groups
+    SET
+        group_name = nvl(:group_name,group_name),
+        group_description = nvl(:group_description,group_description),
+        is_deleted = nvl(:is_deleted,is_deleted)
+
+    WHERE
+        detail_id = :detail_id;
+          :status := 200;
+    :status_message := 'Success';
+
+    EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+
+        :status_message := sqlerrm;
+
+END;
+______________________________________________________________________________________________________________________________________
+
+// http://localhost:8080/ords/saadoun_task/User_Management/groups_pages_membership
+// GET
+SELECT
+    group_name,
+    membership_date,
+    group_description,
+    cursor( select * from groups_pages_membership ugm JOIN pages_lkp g ON ugm.page_id = g.page_id where user_id = u.user_id)  AS pages
+FROM
+    groups_pages_membership,
+    groups,
+    pages_lkp
+WHERE
+        groups_pages_membership.group_id = groups.group_id
+    AND groups_pages_membership.page_id = pages_lkp.page_id
+and
+     (
+     (:searchBy = 'Group' And lower(group_name) LIKE '%'|| lower(:group_name) || '%')
+       OR (:searchBy = 'Page' And lower(page_name) LIKE '%'|| lower(:page_name)|| '%') 
+       Or :searchBy = 'All'
+       )
+     AND groups_pages_membership.is_deleted = 'F'
+    ORDER BY
+    membership_id
+
+Param:
+group_name	group_name	IN	URI	STRING	
+page_name	page_name	IN	URI	STRING	
+searchBy	searchBy	IN	URI	STRING	
+
+
+// POST
+
+
+DECLARE
+    details_body blob; -- Changed from BLOB to CLOB for JSON data
+BEGIN
+    details_body := :body;
+
+    -- Insert into users_groups_membership table
+    INSERT INTO groups_pages_membership (
+        group_id,
+        page_id
+    )
+    SELECT
+        :group_id,
+        jt.page_id
+    FROM
+        JSON_TABLE(
+            details_body,
+            '$[*]'
+            COLUMNS (
+                page_id VARCHAR2(50) PATH '$.page_id'
+            )
+        ) jt;
+
+    :status := 200;
+    :status_message := 'Success';
+EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+        :status_message := SQLERRM;
+END;
+
+Param:
+
+group_id	group_id	IN	URI	STRING	
+status	status	OUT	RESPONSE	STRING	
+status_message	status_message	OUT	RESPONSE	STRING	
+______________________________________________________________________________________________________________________________________
+http://localhost:8080/ords/saadoun_task/User_Management/pages
+
+GET
+select * from pages_lkp
+______________________________________________________________________________________________________________________________________
+http://localhost:8080/ords/saadoun_task/User_Management/user_full_details
+
+SELECT 
+    u.user_id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.creation_date,
+    cursor(
+    select g.group_name , cursor( select * from groups_pages_membership groupsPages JOIN pages_lkp pagesLKP ON groupsPages.page_id = pagesLKP.page_id 
+    where groupsPages.group_id =ugm.group_id)  AS pages
+    from Users_Groups_Membership ugm JOIN Groups g ON ugm.group_id = g.group_id where user_id = u.user_id)  AS groups
+
+FROM 
+    Users u
+    where username = :username and password = :password
+    GROUP BY 
+    u.user_id, u.username, u.email, u.first_name, u.last_name, u.creation_date
+
+Param
+password	password	IN	HTTP HEADER	STRING	
+username	username	IN	HTTP HEADER	STRING	
+______________________________________________________________________________________________________________________________________
+http://localhost:8080/ords/saadoun_task/User_Management/users
+
+GET
+
+select * from users where username like nvl('%'||:username||'%', username) and is_deleted = 'F'
+
+Param
+username	username	IN	URI	STRING	
+
+PUT
+BEGIN
+    UPDATE users
+    SET
+        username = nvl(:username, username),
+        email = nvl(:email, email),
+        first_name = nvl(:first_name, first_name),
+        last_name = nvl(:last_name, last_name), 
+        password = nvl(:password, password),
+        is_deleted = nvl(:is_deleted,is_deleted)
+    WHERE
+        user_id = :user_id;
+
+    :status := 200;
+    :status_message := 'Success';
+EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+        :status_message := sqlerrm;
+END;
+
+Param
+status	status	OUT	RESPONSE	STRING	
+status_message	status_message	OUT	RESPONSE	STRING	
+
+POST
+BEGIN
+    INSERT INTO users (
+        username,
+        email,
+        first_name,
+        last_name,
+        password
+    ) VALUES (
+        :username,
+        :email,
+        :first_name,
+        :last_name,
+        :password
+    ) returning user_id into :user_id;
+
+    :status := 200;
+    :status_message := 'Success';
+
+    EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+        :status_message := sqlerrm;
+END;
+
+Param
+status	status	OUT	RESPONSE	STRING	
+status_message	status_message	OUT	RESPONSE	STRING	
+user_id	user_id	OUT	RESPONSE	STRING	
+
+______________________________________________________________________________________________________________________________________
+http://localhost:8080/ords/saadoun_task/User_Management/users_groups_membership
+
+DELETE
+begin
+delete from users_groups_membership where membership_id = :membership_id;
+    :status := 200;
+    :status_message := 'Success';
+EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+        :status_message := sqlerrm;
+end;
+
+Param
+membership_id	membership_id	IN	URI	STRING	
+status	status	OUT	RESPONSE	STRING	
+status_message	status_message	OUT	RESPONSE	STRING	
+
+GET
+
+SELECT
+    u.user_id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+
+    cursor( select * from Users_Groups_Membership ugm JOIN Groups g ON ugm.group_id = g.group_id where user_id = u.user_id)  AS groups
+FROM
+    users u left join  users_groups_membership ugm on ugm.user_id =u.user_id 
+WHERE
+    lower(username) LIKE nvl('%'|| lower(:username)|| '%',username )
+    GROUP BY 
+    u.user_id, u.username, u.email, u.first_name, u.last_name, u.creation_date
+
+Param
+username	username	IN	URI	STRING	
+
+POST
+DECLARE
+    details_body blob; -- Changed from BLOB to CLOB for JSON data
+BEGIN
+    details_body := :body;
+
+    -- Insert into users_groups_membership table
+    INSERT INTO users_groups_membership (
+        user_id,
+        group_id
+    )
+    SELECT
+        :user_id,
+        jt.group_id
+    FROM
+        JSON_TABLE(
+            details_body,
+            '$[*]'
+            COLUMNS (
+                group_id VARCHAR2(50) PATH '$.group_id'
+            )
+        ) jt;
+
+    :status := 200;
+    :status_message := 'Success';
+EXCEPTION
+    WHEN OTHERS THEN
+        :status := 500;
+        :status_message := SQLERRM;
+END;
+
+Param
+status	status	OUT	RESPONSE	STRING	
+status_message	status_message	OUT	RESPONSE	STRING	
+user_id	user_id	IN	URI	STRING	
+

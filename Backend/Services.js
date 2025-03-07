@@ -6,7 +6,7 @@ async function logIn(username, password) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/user_full_details`,
+      url: `${dbURL}/ords/mg_test/User_Management/user_full_details`,
       headers: {
         username: username,
         password: password,
@@ -25,8 +25,25 @@ async function getGroups(groupName) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/groups?group_name=${
+      url: `${dbURL}/ords/mg_test/User_Management/groups?group_name=${
         groupName || ""
+      }`,
+      headers: {},
+    };
+    const response = await axios.request(config);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getUsers(username) {
+  try {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${dbURL}/ords/mg_test/User_Management/users?username=${
+        username || ""
       }`,
       headers: {},
     };
@@ -42,7 +59,7 @@ async function getPages() {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/pages`,
+      url: `${dbURL}/ords/mg_test/User_Management/pages`,
       headers: {},
     };
     const response = await axios.request(config);
@@ -60,7 +77,7 @@ async function createUser(userObj) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/users`,
+      url: `${dbURL}/ords/mg_test/User_Management/users`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -81,7 +98,7 @@ async function createGroup(groupOBJ) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/groups`,
+      url: `${dbURL}/ords/mg_test/User_Management/groups`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -103,7 +120,7 @@ async function createUserGroups(groupsList, userID) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/users_groups_membership?user_id=${
+      url: `${dbURL}/ords/mg_test/User_Management/users_groups_membership?user_id=${
         userID || ""
       }`,
       headers: {
@@ -125,7 +142,7 @@ async function createGroupPages(PagesList, groupID) {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `${dbURL}/ords/saadoun_task/User_Management/groups_pages_membership?group_id=${
+      url: `${dbURL}/ords/mg_test/User_Management/groups_pages_membership?group_id=${
         groupID || ""
       }`,
       headers: {
@@ -154,4 +171,5 @@ export {
   getPages,
   createGroup,
   createGroupPages,
+  getUsers,
 };

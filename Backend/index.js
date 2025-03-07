@@ -8,6 +8,7 @@ import {
   createUserGroups,
   getPages,
   createGroup,
+  getUsers,
   createGroupPages,
 } from "./Services.js";
 const app = express();
@@ -31,6 +32,17 @@ app.get("/groups", async (req, res) => {
     const { group_name } = req.query;
     // console.log(req.query);
     const result = await getGroups(group_name);
+    // console.log(result);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send("Internal Server Error!");
+  }
+});
+app.get("/users", async (req, res) => {
+  try {
+    const { username } = req.query;
+    // console.log(req.query);
+    const result = await getUsers(username);
     // console.log(result);
     res.send(result);
   } catch (error) {

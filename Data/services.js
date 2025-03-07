@@ -26,6 +26,17 @@ async function getGroups(groupName) {
   //   console.log(res);
   return res;
 }
+async function getUsers(username) {
+  var settings = {
+    url: `${baseURL}/users?username=${username || ""}`,
+    method: "GET",
+    timeout: 0,
+  };
+
+  let res = await $.ajax(settings);
+  //   console.log(res);
+  return res;
+}
 async function getPages() {
   var settings = {
     url: `${baseURL}/pages`,

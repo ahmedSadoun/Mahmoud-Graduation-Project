@@ -1,62 +1,17 @@
+let groups = [];
+
 // script.js
 window.addEventListener("load", async () => {
   if (!findPageByName("DISPLAY_GROUP")) {
     goToPage("homePage.html");
+    return;
   }
+  // get the groups
+  let res = await getGroups();
+  // console.log(res);
+  groups = res.items;
+  renderGroups(groups);
 });
-// Sample group data
-const data = {
-  items: [
-    {
-      group_id: 4,
-      group_name: "new Group",
-      group_description: "test from postman",
-      is_deleted: "F",
-    },
-    {
-      group_id: 1,
-      group_name: "Admins",
-      group_description: "Group of system administrators",
-      is_deleted: "F",
-    },
-    {
-      group_id: 2,
-      group_name: "Editors",
-      group_description: "Content editors group",
-      is_deleted: "F",
-    },
-    {
-      group_id: 3,
-      group_name: "Viewers",
-      group_description: "Group with view-only permissions",
-      is_deleted: "F",
-    },
-  ],
-  hasMore: false,
-  limit: 25,
-  offset: 0,
-  count: 4,
-  links: [
-    {
-      rel: "self",
-      href: "http://windinfosys.com/ords/saadoun_task/User_Management/groups",
-    },
-    {
-      rel: "edit",
-      href: "http://windinfosys.com/ords/saadoun_task/User_Management/groups",
-    },
-    {
-      rel: "describedby",
-      href: "http://windinfosys.com/ords/saadoun_task/metadata-catalog/User_Management/item",
-    },
-    {
-      rel: "first",
-      href: "http://windinfosys.com/ords/saadoun_task/User_Management/groups",
-    },
-  ],
-};
-
-let groups = data.items; // Extract the groups from the data
 
 // Function to render groups in the table
 function renderGroups(groupList) {
@@ -67,17 +22,17 @@ function renderGroups(groupList) {
 
   groupList.forEach((group, index) => {
     const row = tbody.insertRow();
-    row.insertCell(0).textContent = group.group_id;
-    row.insertCell(1).textContent = group.group_name;
-    row.insertCell(2).textContent = group.group_description;
+    // row.insertCell(0).textContent = group.group_id;
+    row.insertCell(0).textContent = group.group_name;
+    row.insertCell(1).textContent = group.group_description;
 
     // Add a delete button
-    const actionCell = row.insertCell(3);
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.classList.add("removeBtn");
-    deleteBtn.addEventListener("click", () => deleteGroup(index));
-    actionCell.appendChild(deleteBtn);
+    // const actionCell = row.insertCell(3);
+    // const deleteBtn = document.createElement("button");
+    // deleteBtn.textContent = "Delete";
+    // deleteBtn.classList.add("removeBtn");
+    // deleteBtn.addEventListener("click", () => deleteGroup(index));
+    // actionCell.appendChild(deleteBtn);
   });
 }
 
@@ -94,18 +49,23 @@ function filterGroups(searchTerm) {
       group.group_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       group.group_description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  renderGroups(filteredGroups);
+  return filteredGroups;
 }
 
 // Initial render of all groups
-renderGroups(groups);
 
 // Add event listener for search input
 document
   .getElementById("searchInput")
-  .addEventListener("input", function (event) {
+  .addEventListener("input", async function (event) {
     const searchTerm = event.target.value;
-    filterGroups(searchTerm);
+    let filteredGroups = filterGroups(searchTerm);
+    if (filteredGroups.length == 0) {
+      let res = await getGroups(searchTerm);
+      // console.log(res);
+      filteredGroups = res.items;
+    }
+    renderGroups(filteredGroups);
   });
 
 // header logic goes here

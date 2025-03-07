@@ -1,40 +1,16 @@
+let users = [];
 // script.js
 window.addEventListener("load", async () => {
   if (!findPageByName("DISPLAY_USERS")) {
     goToPage("homePage.html");
+    return;
   }
+  let res = await getUsers();
+  console.log(res.items);
+  users = res.items;
+  renderUsers(users);
 });
 // Sample user data
-let users = [
-  {
-    user_id: 1,
-    username: "john.doe",
-    email: "john.doe@example.com",
-    first_name: "John",
-    last_name: "Doe",
-  },
-  {
-    user_id: 2,
-    username: "jane.smith",
-    email: "jane.smith@example.com",
-    first_name: "Jane",
-    last_name: "Smith",
-  },
-  {
-    user_id: 3,
-    username: "omar.ahmed",
-    email: "omar.ahmed@home.com",
-    first_name: "Omar",
-    last_name: "Ahmed",
-  },
-  {
-    user_id: 4,
-    username: "sara.jones",
-    email: "sara.jones@example.com",
-    first_name: "Sara",
-    last_name: "Jones",
-  },
-];
 
 let selectedUser = null;
 
@@ -47,11 +23,11 @@ function renderUsers(userList) {
 
   userList.forEach((user) => {
     const row = tbody.insertRow();
-    row.insertCell(0).textContent = user.user_id;
-    row.insertCell(1).textContent = user.username;
-    row.insertCell(2).textContent = user.email;
-    row.insertCell(3).textContent = user.first_name;
-    row.insertCell(4).textContent = user.last_name;
+    // row.insertCell(0).textContent = user.user_id;
+    row.insertCell(0).textContent = user.username;
+    row.insertCell(1).textContent = user.email;
+    row.insertCell(2).textContent = user.first_name;
+    row.insertCell(3).textContent = user.last_name;
 
     // Add click event to select a row
     row.addEventListener("click", () => {
@@ -74,18 +50,23 @@ function filterUsers(searchTerm) {
   const filteredUsers = users.filter((user) =>
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  renderUsers(filteredUsers);
+  return filteredUsers;
 }
 
 // Initial render of all users
-renderUsers(users);
 
 // Add event listener for search input
 document
   .getElementById("searchInput")
-  .addEventListener("input", function (event) {
+  .addEventListener("input", async function (event) {
     const searchTerm = event.target.value;
-    filterUsers(searchTerm);
+    let filteredUsers = filterUsers(searchTerm);
+    if (filteredUsers.length == 0) {
+      let res = await getUsers(searchTerm);
+      // console.log(res.items);
+      filteredUsers = res.items;
+    }
+    renderUsers(filteredUsers);
   });
 
 // Delete button functionality

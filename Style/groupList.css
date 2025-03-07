@@ -16,6 +16,10 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
+  min-height: 450px;
+  max-height: 450px;
+  overflow: hidden;
+  overflow-y: auto;
   text-align: center;
 }
 
